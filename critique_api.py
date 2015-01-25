@@ -1,6 +1,6 @@
 class ProblemType:
-	# Visual
-	TooManyColours = "toomanycolours"
+	# Once upon a time I was actually going to rasterize the document and detect alignment.
+	# It never happened.
 	TooManyTabstops = "toomanytabstops"
 
 	# Text
