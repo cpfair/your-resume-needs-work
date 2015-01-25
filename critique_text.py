@@ -11,6 +11,7 @@ class TextCritiquer(CritiqueGenerator):
 		"january,february,march,april,may,june,july,august,september,october,november,december".split(","),
 		"jan,feb,march,apr,may,jun,jul,aug,sep,oct,nov,dec".split(",")
 	]
+
 	def literal_parser(self, txt):
 		literal = txt.group(1)
 		if literal == "t":
@@ -22,12 +23,14 @@ class TextCritiquer(CritiqueGenerator):
 		elif literal[0] == "U":
 			return chr(int(literal[1:], 16))
 		pass
+
 	def extract_text(self, pdf):
-		import subprocess, ast
+		import subprocess
 		out = subprocess.check_output(["automator", "-i", pdf, "extracttext.workflow/"], stderr=subprocess.STDOUT)
-		subprocess.check_output(["textutil", "-convert", "txt", "/Volumes/MacintoshHD/Users/collinfair/Desktop/uploaded.rtf"])
-		rtf = open("/Volumes/MacintoshHD/Users/collinfair/Desktop/uploaded.rtf", "rb").read().decode("utf-8")
-		text = open("/Volumes/MacintoshHD/Users/collinfair/Desktop/uploaded.txt", "rb").read().decode("utf-8")
+		path = re.search(r"\"(.+?\.rtf)\"", out.decode("ascii")).group(1)
+		subprocess.check_output(["textutil", "-convert", "txt", path])
+		rtf = open(path, "rb").read().decode("utf-8")
+		text = open(path.replace(".rtf", ".txt"), "rb").read().decode("utf-8")
 		return rtf, text
 
 	def critique(self, pdf):
@@ -68,8 +71,7 @@ class TextCritiquer(CritiqueGenerator):
 		# white, black, background, fg-1, fg-2
 		# so, 5
 		if len(colours) > 5:
-			# HAXX
-			snippets = [Snippet("&nbsp", style="background-color:rgb(%s, %s, %s)" % x, cssclass="swatch") for x in colours]
+			snippets = [Snippet("&nbsp;", style="background-color:rgb(%s, %s, %s)" % x, cssclass="swatch") for x in colours]
 			return [ProblemArea(ProblemType.TooManyColours, 0, snippets=snippets)]
 		return []
 
@@ -141,7 +143,6 @@ class TextCritiquer(CritiqueGenerator):
 					problems.append(ProblemArea(ProblemType.InconsistentMonths, 0, snippets=snippets))
 
 		return problems
-
 
 	def bullet_consistency(self, runs):
 		used_bullet_types = set()
