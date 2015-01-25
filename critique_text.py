@@ -141,6 +141,8 @@ class TextCritiquer(CritiqueGenerator):
 			for abbrset in using_abbr_sets:
 				if abbrset != selected_abbr_set:
 					snippets = [Snippet(run, (offending_matches[self.month_abbrs.index(abbrset)].start(), offending_matches[self.month_abbrs.index(abbrset)].end()))]
+					if not problems:
+						snippets += [Snippet(run, (offending_matches[self.month_abbrs.index(selected_abbr_set)].start(), offending_matches[self.month_abbrs.index(selected_abbr_set)].end()))]
 					problems.append(ProblemArea(ProblemType.InconsistentMonths, 0, snippets=snippets))
 
 		return problems
