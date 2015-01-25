@@ -46,6 +46,7 @@ class TextCritiquer(CritiqueGenerator):
 		problems += self.month_consistency(runs)
 		problems += self.chronological_sections(runs)
 
+		# Using only the finest RTF-parsing regex
 		problems += self.fonts(rtf)
 		problems += self.colours(rtf)
 		problems += self.font_sizes(rtf)
@@ -106,7 +107,7 @@ class TextCritiquer(CritiqueGenerator):
 				current_min_date = None
 			else:
 				# find the dates
-				unparsed_dates = re.findall("(?:%s) \d{4}" % "|".join(allabbrs), run, re.IGNORECASE)
+				unparsed_dates = re.findall("(?:(?:%s) \d{4}|20\d\d|19\d\d)" % "|".join(allabbrs), run, re.IGNORECASE)
 				parsed_dates = [dateutil.parser.parse(x) for x in unparsed_dates]
 				if parsed_dates:
 					mindate = min(parsed_dates)
