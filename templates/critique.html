@@ -1,0 +1,30 @@
+{% extends "template.html" %}
+{% block body %}
+<h2>Résumé Score™: 6/10, at least it's not the CECA template</h2>
+<table style="width: 100%; table-layout: fixed; border-spacing: 10px;">
+	<tr>
+		<td style="width: 50%;">
+			<h3>Here's your résumé</h3>
+		</td>
+		<td>
+			<h3>Here's what's wrong with it</h3>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<iframe src="/static/uploaded.pdf?{{ random }}" width="100%"  height="880" style="box-shadow: 0 0 5px #000; border: 0;">
+</iframe>
+		</td>
+		<td class="problem-list">
+			{% for problem in problems %}
+			<div class="problem">
+				<span class="head">{{ problem.humanify() }}</span>
+				{% for snippet in problem.snippets %}
+					<div class="snippet {{snippet.cssclass}}" style="{{snippet.style|safe}}">{{ snippet.htmlify()|safe }}</div>
+				{% endfor %}
+			</div>
+			{% endfor %}
+		</td>
+	</tr>
+</table>
+{% endblock %}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+	<style type="text/css">
+	body {
+		font-family: sans-serif;
+		text-align: center;
+		font-size: 150%;
+	}
+	input {
+		font-size: 120%;
+	}
+
+	.dz-default {
+		display: block;
+		position: relative;
+		border:10px dashed #eee;
+		width: 500px;
+		left: 50%;
+		margin-left: -250px;
+		line-height: 250px;
+		font-size: 200%;
+		font-weight: bold;
+	}
+
+	.problem-list {
+		text-align: left;
+	}
+
+	.problem {
+		padding: 20px;
+
+	}
+
+	.problem .head {
+		font-size: 120%;
+		font-weight: bold;
+	}
+
+	.problem:nth-child(odd) {
+		background-color: #eee;
+	}
+
+	.snippet strong {
+		color: maroon;
+		border-bottom: 1px dashed maroon;
+	}
+	</style>
+</head>
+<body>
+<h1>Your Résumé Needs Work</h1>
+{% block body %}{% endblock %}
+</body>
+</html>

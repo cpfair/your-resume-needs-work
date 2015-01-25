@@ -1,0 +1,14 @@
+{% extends "template.html" %}
+{% block body %}
+<script type="text/javascript" src="static/dropzone.js"></script>
+<h2>How? Let's see</h2>
+<form method="POST" action="/upload" enctype="multipart/form-data" class="dropzone" id="upload">
+</form>
+<script type="text/javascript">
+Dropzone.options.upload = {
+	success: function(){
+		window.location = "upload";
+	}
+};
+</script>
+{% endblock %}
